@@ -42,6 +42,8 @@ const rooms = [
   { id: 1, puzzle: 'מה צבע השמש?', solution: 'צהוב' },
   { id: 2, puzzle: 'כמה רגליים יש לעכביש?', solution: '8' },
   { id: 3, puzzle: 'איזה חודש הוא הראשון בשנה?', solution: 'ינואר' },
+  { id: 4, puzzle: 'איזו חיה נחשבת למלך החיות?', solution: 'אריה ' }
+  
 ];
 
 function App() {

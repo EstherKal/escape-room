@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Typography, TextField, Box, Container } from '@mui/material';
 
 interface RoomProps {
@@ -12,6 +12,11 @@ const Room = ({ roomId, puzzle, solution, onNextRoom }:RoomProps) => {
   const [answer, setAnswer] = useState('');
   const [isSolved, setIsSolved] = useState(false);
 
+  useEffect(() => {
+    setAnswer('');
+    setIsSolved(false);
+  }, [roomId]);
+  
   const handleSubmit = () => {
     if (answer.trim().toLowerCase() === solution.toLowerCase()) {
       setIsSolved(true);
