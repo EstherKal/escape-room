@@ -37,12 +37,17 @@ import React, { useState } from 'react';
 import StartScreen from './components/StartScreen';
 import Room from './components/Room';
 import EndScreen from './components/EndScreen';
+import PuzzleRoom from './components/puzzleRoom';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
 
 const rooms = [
-  { id: 1, puzzle: 'מה צבע השמש?', solution: 'צהוב' },
-  { id: 2, puzzle: 'כמה רגליים יש לעכביש?', solution: '8' },
-  { id: 3, puzzle: 'איזה חודש הוא הראשון בשנה?', solution: 'ינואר' },
-  { id: 4, puzzle: 'איזו חיה נחשבת למלך החיות?', solution: 'אריה ' }
+  // { id: 1, puzzle: 'מה צבע השמש?', solution: 'צהוב' },
+  { id: 1, puzzle: 'כמה רגליים יש לעכביש?', solution: '8' },
+  // { id: 3, puzzle: 'איזו חיה נחשבת למלך החיות?', solution: 'אריה' },
+  // { id: 4, puzzle: 'איזה חודש הוא הראשון בשנה?', solution: 'ינואר' },
+  { id: 2, type: 'drag-and-drop' }
   
 ];
 
@@ -67,18 +72,27 @@ function App() {
   };
 
   return (
-    <div>
-      {gameState === 'start' && <StartScreen onStart={handleStart} />}
-      {gameState === 'playing' && (
-        <Room
-          roomId={rooms[currentRoom].id}
-          puzzle={rooms[currentRoom].puzzle}
-          solution={rooms[currentRoom].solution}
-          onNextRoom={handleNextRoom}
-        />
-      )}
-      {gameState === 'end' && <EndScreen onRestart={handleRestart} />}
-    </div>
+    <DndProvider backend={HTML5Backend}> {/* עטיפת כל התוכן ב- DndProvider */}
+      <div>
+        {gameState === 'start' && <StartScreen onStart={handleStart} />}
+        {gameState === 'playing' && (
+          <>
+          {rooms[currentRoom].type === 'drag-and-drop' ? (
+            //  <PuzzleRoom onNextRoom={handleNextRoom} />
+            <PuzzleRoom />
+          ) : (
+            <Room
+              roomId={rooms[currentRoom].id}
+              puzzle={rooms[currentRoom].puzzle!}
+              solution={rooms[currentRoom].solution!}
+              onNextRoom={handleNextRoom}
+            />
+          )}
+        </>
+        )}
+        {gameState === 'end' && <EndScreen onRestart={handleRestart} />}
+      </div>
+    </DndProvider>
   );
 }
 
